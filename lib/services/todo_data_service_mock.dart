@@ -3,6 +3,7 @@ import '../models/todo.dart';
 final _todosDatabase = <Todo>[
   Todo(id: 1, title: 'Complete Assignment 1', completed: false),
   Todo(id: 2, title: 'Plan for next vacation', completed: true),
+  Todo(id: 3, title: 'Testing Add task 3', completed: false),
 ];
 
 int _nextId = 3;
@@ -36,4 +37,4 @@ class TodoDataServiceMock {
   }
 }
 
-final todoDataService = TodoDataServiceMock();
+//final todoDataService = TodoDataServiceMock();

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../models/todo.dart';
-import '../services/todo_data_service_mock.dart';
+//import '../services/todo_data_service_mock.dart';
 
 class TodoListScreen extends StatefulWidget {
-  const TodoListScreen({super.key});
+ // const TodoListScreen({super.key});
+
+  final dataService;
+
+  const TodoListScreen({super.key, this.dataService});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -17,7 +21,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Todo>>(
-        future: todoDataService.getTodoList(),
+        //future: todoDataService.getTodoList(),
+        future: widget.dataService.getTodoList(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             _todos = snapshot.data!;
@@ -48,7 +53,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
             subtitle: Text('id: ${_todo.id}'),
             onTap: () async {
               //Update the status at the database
-              Todo updatedTodo = await todoDataService.updateTodoStatus(
+//              Todo updatedTodo = await todoDataService.updateTodoStatus(
+              Todo updatedTodo = await widget.dataService.updateTodoStatus(  
                   id: _todos[index].id,
                   status: !_todos[index]
                       .completed); // Get the current status from UI and toggle it
@@ -56,7 +62,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   .completed); // Update UI using the updated todo from database
             },
             onLongPress: () async {
-              await todoDataService.deleteTodo(
+//              await todoDataService.deleteTodo(
+              await widget.dataService.deleteTodo(  
                   id: _todos[index].id); // Delete todo at the database
               setState(() => _todos.removeAt(index)); // Update UI
             },
@@ -66,7 +73,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
-          final newTodo = await todoDataService.createTodo(
+//          final newTodo = await todoDataService.createTodo(
+          final newTodo = await widget.dataService.createTodo(  
             todo: Todo(title: 'New Task', id: _todos.length++)
           ); // Update server. Id for the new Todo will be given by the server
 

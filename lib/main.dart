@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/todo_list_screen.dart';
+import 'services/todo_data_service_mock.dart';
 
 void main() {
   runApp(const MainApp());
@@ -17,7 +18,7 @@ class MainApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.green,
         ),),
-      home: const TodoListScreen(),
+      home: TodoListScreen(dataService: TodoDataServiceMock()),
 //       home: Scaffold(
 //         body: Center(
 //           child: Text('Hello World!'),
