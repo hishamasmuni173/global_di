@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../dependencies.dart';
 import '../models/todo.dart';
 import '../services/todo_data_service_mock.dart';
 
@@ -16,6 +17,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final TodoDataServiceMock todoDataService = service();
+
     return FutureBuilder<List<Todo>>(
         future: todoDataService.getTodoList(),
         builder: (context, snapshot) {
@@ -48,6 +51,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
             subtitle: Text('id: ${_todo.id}'),
             onTap: () async {
               //Update the status at the database
+              final TodoDataServiceMock todoDataService = service();
               Todo updatedTodo = await todoDataService.updateTodoStatus(
                   id: _todos[index].id,
                   status: !_todos[index]
@@ -56,6 +60,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   .completed); // Update UI using the updated todo from database
             },
             onLongPress: () async {
+              final TodoDataServiceMock todoDataService = service();
               await todoDataService.deleteTodo(
                   id: _todos[index].id); // Delete todo at the database
               setState(() => _todos.removeAt(index)); // Update UI
@@ -66,6 +71,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
+          final TodoDataServiceMock todoDataService = service();
           final newTodo = await todoDataService.createTodo(
             todo: Todo(title: 'New Task', id: _todos.length++)
           ); // Update server. Id for the new Todo will be given by the server
